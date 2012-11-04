@@ -11,9 +11,15 @@ dist.ini
 lib/MooseX/RelatedClasses.pm
 t/00-compile.t
 t/000-report-versions-tiny.t
+t/all_in_namespace.t
 t/author-pod-spell.t
 t/basic.t
+t/blank_namespace.t
 t/desnaking-with-doublecolon.t
+t/funcs.pm
+t/lib/Test/Class/__WONKY__.pm
+t/lib/Test/Class/__WONKY__/One.pm
+t/lib/Test/Class/__WONKY__/Sub/One.pm
 t/multiple.t
 t/release-consistent-version.t
 t/release-eol.t
@@ -22,4 +28,3 @@ t/release-no-smart-comments.t
 t/release-no-tabs.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
-t/release-portability.t
