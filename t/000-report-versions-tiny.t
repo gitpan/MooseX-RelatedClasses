@@ -48,6 +48,7 @@ sub pmver {
     return sprintf('%-45s => %-10s%-15s%s', $module, $pmver, $wanted, "\n");
 }
 
+eval { $v .= pmver('Class::Load','any version') };
 eval { $v .= pmver('ExtUtils::MakeMaker','6.30') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };
@@ -57,7 +58,6 @@ eval { $v .= pmver('Moose','any version') };
 eval { $v .= pmver('Moose::Util::TypeConstraints','any version') };
 eval { $v .= pmver('MooseX::AttributeShortcuts','0.015') };
 eval { $v .= pmver('MooseX::Role::Parameterized','any version') };
-eval { $v .= pmver('MooseX::Traits','any version') };
 eval { $v .= pmver('MooseX::Types::Common::String','any version') };
 eval { $v .= pmver('MooseX::Types::LoadableClass','any version') };
 eval { $v .= pmver('MooseX::Types::Moose','any version') };
@@ -65,12 +65,12 @@ eval { $v .= pmver('MooseX::Types::Perl','any version') };
 eval { $v .= pmver('MooseX::Util','any version') };
 eval { $v .= pmver('Pod::Coverage::TrustPod','any version') };
 eval { $v .= pmver('Smart::Comments','any version') };
-eval { $v .= pmver('String::CamelCase','any version') };
 eval { $v .= pmver('String::RewritePrefix','any version') };
 eval { $v .= pmver('Test::Moose::More','0.014') };
 eval { $v .= pmver('Test::More','0.88') };
 eval { $v .= pmver('Test::Pod','1.41') };
 eval { $v .= pmver('Test::Pod::Coverage','1.08') };
+eval { $v .= pmver('autobox::Camelize','any version') };
 eval { $v .= pmver('autobox::Core','any version') };
 eval { $v .= pmver('namespace::autoclean','any version') };
 eval { $v .= pmver('strict','any version') };

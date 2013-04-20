@@ -9,7 +9,7 @@
 #
 package MooseX::RelatedClasses;
 {
-  $MooseX::RelatedClasses::VERSION = '0.002';
+  $MooseX::RelatedClasses::VERSION = '0.003';
 }
 
 # ABSTRACT: Parameterized role for related class attributes
@@ -17,8 +17,8 @@ package MooseX::RelatedClasses;
 use MooseX::Role::Parameterized;
 use namespace::autoclean;
 use autobox::Core;
+use autobox::Camelize;
 use MooseX::AttributeShortcuts 0.015;
-use MooseX::Traits;
 use MooseX::Types::Common::String ':all';
 use MooseX::Types::LoadableClass ':all';
 use MooseX::Types::Perl ':all';
@@ -27,8 +27,11 @@ use MooseX::Util 'with_traits';
 
 use Module::Find 'findallmod';
 
-use String::CamelCase 'decamelize';
+use Class::Load 'load_class';
 use String::RewritePrefix;
+
+# debugging...
+#use Smart::Comments '###';
 
 
 parameter name  => (
@@ -58,6 +61,14 @@ parameter namespace => (
     predicate => 1,
 );
 
+parameter load_all => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 0,
+);
+
+parameter private => (is => 'ro', isa => 'Bool', default => 0);
+
 # TODO use rewrite prefix to look for traits in namespace
 
 role {
@@ -81,7 +92,8 @@ role {
 
         ### finding for namespace: $ns
         my @mod =
-            map { s/^${ns}:://; $_ }
+            map { s/^${ns}:://; $_                   }
+            map { load_class($_) if $p->load_all; $_ }
             Module::Find::findallmod $ns
             ;
         $p->names->push(@mod);
@@ -96,53 +108,57 @@ role {
 sub _generate_one_attribute_set {
     my ($p, $name, %opts) = @_;
 
-    #my $name = $p->namespace . '::' . $p->name;
     my $full_name
         = $p->namespace
         ? $p->namespace . '::' . $name
         : $name
         ;
 
-    my $local_name           = decamelize($name) . '_class';
-    $local_name              =~ s/::/__/g; # SomeThing::More -> some_thing__more
-    my $original_local_name  = "original_$local_name";
-    my $traitsfor_local_name = $local_name . '_traits';
+    my $pvt = $p->private ? '_' : q{};
 
-    has $original_local_name => (
+    # SomeThing::More -> some_thing__more
+    my $local_name           = $name->decamelize . '_class';
+    my $original_local_name  = "original_$local_name";
+    my $original_reader      = "$pvt$original_local_name";
+    my $traitsfor_local_name = $local_name . '_traits';
+    my $traitsfor_reader     = "$pvt$traitsfor_local_name";
+
+    ### $full_name
+    has "$pvt$original_local_name" => (
         traits   => [Shortcuts],
         is       => 'lazy',
         isa      => LoadableClass,
         coerce   => 1,
-        init_arg => "$local_name",
+        init_arg => "$pvt$local_name",
+        builder  => sub { $full_name },
     );
 
-    has $local_name => (
+    has "$pvt$local_name" => (
         traits   => [Shortcuts],
         is       => 'lazy',
-        isa      => PackageName,
+        isa      => LoadableClass,
         init_arg => undef,
-    );
+        builder  => sub {
+            my $self = shift @_;
 
-    # XXX do the same original/local init_arg swizzle here too?
-    has $traitsfor_local_name => (
-        traits  => [Shortcuts, 'Array'],
-        is      => 'lazy',
-        isa     => ArrayRef[PackageName],
-        handles => {
-            "has_$traitsfor_local_name" => 'count',
+            return with_traits( $self->$original_reader() =>
+                $self->$traitsfor_reader()->flatten,
+            );
         },
     );
 
-    method "_build_original_$local_name" => sub { $full_name };
-    method "_build_$local_name" => sub {
-        my $self = shift @_;
+    # XXX do the same original/local init_arg swizzle here too?
+    has "$pvt$traitsfor_local_name" => (
+        traits  => [Shortcuts, 'Array'],
+        is      => 'lazy',
+        isa     => ArrayRef[LoadableRole],
+        builder => sub { [ ] },
+        handles => {
+            "${pvt}has_$traitsfor_local_name" => 'count',
+        },
+    );
 
-        return with_traits($self->$original_local_name(),
-            $self->$traitsfor_local_name()->flatten,
-        );
-    };
-
-    method "_build_$traitsfor_local_name" => sub { [ ] };
+    return;
 }
 
 !!42;
@@ -153,7 +169,7 @@ __END__
 
 =encoding utf-8
 
-=for :stopwords Chris Weyl
+=for :stopwords Chris Weyl Parameterized
 
 =head1 NAME
 
@@ -161,7 +177,7 @@ MooseX::RelatedClasses - Parameterized role for related class attributes
 
 =head1 VERSION
 
-This document describes version 0.002 of MooseX::RelatedClasses - released November 03, 2012 as part of MooseX-RelatedClasses.
+This document describes version 0.003 of MooseX::RelatedClasses - released April 19, 2013 as part of MooseX-RelatedClasses.
 
 =head1 SYNOPSIS
 
@@ -185,23 +201,23 @@ This document describes version 0.002 of MooseX::RelatedClasses - released Novem
         traits  => [ Shortcuts ], # MooseX::AttributeShortcuts
         is      => 'lazy',
         isa     => PackageName, # MooseX::Types::Perl
-        default => sub { ... compose original class and traits ... },
+        builder => sub { ... compose original class and traits ... },
     );
 
     has thinger_class_traits => (
-        traits  => [ Shortcuts ], # MooseX::AttributeShortcuts
+        traits  => [ Shortcuts ],
         is      => 'lazy',
         isa     => ArrayRef[PackageName],
-        default => sub { [ ] },
+        builder => sub { [ ] },
     );
 
     has original_thinger_class => (
-        traits  => [ Shortcuts ], # MooseX::AttributeShortcuts
-        is      => 'lazy',
-        coerce  => 1,
-        isa     => LoadableClass, # MooseX::Types::LoadableClass
+        traits   => [ Shortcuts ],
+        is       => 'lazy',
+        isa      => LoadableClass, # MooseX::Types::LoadableClass
+        coerce   => 1,
         init_arg => undef,
-        default => sub { 'My::Framework::Thinger' },
+        builder  => sub { 'My::Framework::Thinger' },
     );
 
     # multiple related classes can be handled in one shot:
@@ -270,7 +286,7 @@ parameters are given.
 
 One or more names that would be legal for the name parameter.
 
-=head2 all_in_namespace (0|1)
+=head2 all_in_namespace (Bool)
 
 True if all findable packages under the namespace should be used as related
 classes.  Defaults to false.
@@ -295,6 +311,17 @@ e.g.:
 
 ...will provide the C<lwp__user_agent_class>, C<lwp__user_agent_traits> and
 C<original_lwp__user_agent_class> attributes.
+
+=head2 load_all (Bool)
+
+If set to true, all related classes are loaded as we find them.  Defaults to
+false.
+
+=head2 private (Bool)
+
+If true, attributes, accessors and builders will all be named according to the
+same rules L<MooseX::AttributeShortcuts> uses.  (That is, in general prefixed
+with an "_".)
 
 =head1 INSPIRATION / MADNESS
 
