@@ -9,6 +9,7 @@ build_requires:
   Moose: 0
   Moose::Util::TypeConstraints: 0
   Smart::Comments: 0
+  Test::Fatal: 0
   Test::Moose::More: 0.014
   Test::More: 0.88
   strict: 0
@@ -29,11 +30,11 @@ no_index:
 provides:
   MooseX::RelatedClasses:
     file: lib/MooseX/RelatedClasses.pm
-    version: 0.003
+    version: 0.004
 requires:
   Class::Load: 0
   Module::Find: 0
-  MooseX::AttributeShortcuts: 0.015
+  MooseX::AttributeShortcuts: 0.019
   MooseX::Role::Parameterized: 0
   MooseX::Types::Common::String: 0
   MooseX::Types::LoadableClass: 0
@@ -48,10 +49,10 @@ requires:
 resources:
   bugtracker: https://github.com/RsrchBoy/moosex-relatedclasses/issues
   repository: git://github.com/RsrchBoy/moosex-relatedclasses.git
-version: 0.003
+version: 0.004
 x_Dist_Zilla:
   perl:
-    version: 5.016002
+    version: 5.016003
   plugins:
     -
       class: Dist::Zilla::Plugin::NextRelease
@@ -277,6 +278,14 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::PodWeaver
       name: '@RSRCHBOY/PodWeaver'
       version: 3.101641
+    -
+      class: Dist::Zilla::Plugin::RemovePrereqs
+      config:
+        Dist::Zilla::Plugin::RemovePrereqs:
+          modules_to_remove:
+            - TestClass::Baz
+      name: RemovePrereqs
+      version: 4.300034
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'

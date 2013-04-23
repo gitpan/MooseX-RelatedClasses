@@ -9,7 +9,7 @@
 #
 package MooseX::RelatedClasses;
 {
-  $MooseX::RelatedClasses::VERSION = '0.003';
+  $MooseX::RelatedClasses::VERSION = '0.004';
 }
 
 # ABSTRACT: Parameterized role for related class attributes
@@ -18,7 +18,7 @@ use MooseX::Role::Parameterized;
 use namespace::autoclean;
 use autobox::Core;
 use autobox::Camelize;
-use MooseX::AttributeShortcuts 0.015;
+use MooseX::AttributeShortcuts 0.019;
 use MooseX::Types::Common::String ':all';
 use MooseX::Types::LoadableClass ':all';
 use MooseX::Types::Perl ':all';
@@ -125,20 +125,23 @@ sub _generate_one_attribute_set {
 
     ### $full_name
     has "$pvt$original_local_name" => (
-        traits   => [Shortcuts],
-        is       => 'lazy',
-        isa      => LoadableClass,
-        coerce   => 1,
-        init_arg => "$pvt$local_name",
-        builder  => sub { $full_name },
+        traits     => [Shortcuts],
+        is         => 'lazy',
+        isa        => LoadableClass,
+        constraint => sub { $_->isa($full_name) },
+        coerce     => 1,
+        init_arg   => "$pvt$local_name",
+        builder    => sub { $full_name },
     );
 
     has "$pvt$local_name" => (
-        traits   => [Shortcuts],
-        is       => 'lazy',
-        isa      => LoadableClass,
-        init_arg => undef,
-        builder  => sub {
+        traits     => [Shortcuts],
+        is         => 'lazy',
+        isa        => LoadableClass,
+        constraint => sub { $_->isa($full_name) },
+        coerce     => 1,
+        init_arg   => undef,
+        builder    => sub {
             my $self = shift @_;
 
             return with_traits( $self->$original_reader() =>
@@ -177,7 +180,7 @@ MooseX::RelatedClasses - Parameterized role for related class attributes
 
 =head1 VERSION
 
-This document describes version 0.003 of MooseX::RelatedClasses - released April 19, 2013 as part of MooseX-RelatedClasses.
+This document describes version 0.004 of MooseX::RelatedClasses - released April 22, 2013 as part of MooseX-RelatedClasses.
 
 =head1 SYNOPSIS
 
@@ -198,26 +201,28 @@ This document describes version 0.003 of MooseX::RelatedClasses - released April
 
     # ...we get:
     has thinger_class => (
-        traits  => [ Shortcuts ], # MooseX::AttributeShortcuts
-        is      => 'lazy',
-        isa     => PackageName, # MooseX::Types::Perl
-        builder => sub { ... compose original class and traits ... },
+        traits     => [ Shortcuts ], # MooseX::AttributeShortcuts
+        is         => 'lazy',
+        isa        => LoadableClass, # MooseX::Types::LoadableClass
+        constraint => sub { $_->isa('Thinger') }, # MX::AttributeShortcuts
+        builder    => sub { ... compose original class and traits ... },
     );
 
     has thinger_class_traits => (
         traits  => [ Shortcuts ],
         is      => 'lazy',
-        isa     => ArrayRef[PackageName],
+        isa     => ArrayRef[LoadableRole],
         builder => sub { [ ] },
     );
 
     has original_thinger_class => (
-        traits   => [ Shortcuts ],
-        is       => 'lazy',
-        isa      => LoadableClass, # MooseX::Types::LoadableClass
-        coerce   => 1,
-        init_arg => undef,
-        builder  => sub { 'My::Framework::Thinger' },
+        traits     => [ Shortcuts ],
+        is         => 'lazy',
+        isa        => LoadableClass,
+        constraint => sub { $_->isa('Thinger') },
+        coerce     => 1,
+        init_arg   => undef,
+        builder    => sub { 'My::Framework::Thinger' },
     );
 
     # multiple related classes can be handled in one shot:
