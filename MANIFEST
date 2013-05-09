@@ -16,6 +16,7 @@ t/all_in_namespace.t
 t/author-pod-spell.t
 t/basic.t
 t/blank_namespace.t
+t/custom-decamelization.t
 t/desnaking-with-doublecolon.t
 t/funcs.pm
 t/lib/Test/Class/__WONKY__.pm

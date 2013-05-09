@@ -30,7 +30,7 @@ no_index:
 provides:
   MooseX::RelatedClasses:
     file: lib/MooseX/RelatedClasses.pm
-    version: 0.004
+    version: 0.005
 requires:
   Class::Load: 0
   Module::Find: 0
@@ -49,10 +49,10 @@ requires:
 resources:
   bugtracker: https://github.com/RsrchBoy/moosex-relatedclasses/issues
   repository: git://github.com/RsrchBoy/moosex-relatedclasses.git
-version: 0.004
+version: 0.005
 x_Dist_Zilla:
   perl:
-    version: 5.016003
+    version: 5.016002
   plugins:
     -
       class: Dist::Zilla::Plugin::NextRelease
@@ -133,7 +133,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::PodSpelling
       name: '@RSRCHBOY/Test::PodSpelling'
-      version: 2.004003
+      version: 2.006000
     -
       class: Dist::Zilla::Plugin::ConsistentVersionTest
       name: '@RSRCHBOY/ConsistentVersionTest'
@@ -161,7 +161,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::Compile
       name: '@RSRCHBOY/Test::Compile'
-      version: 2.001
+      version: 2.002
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@RSRCHBOY/ExtraTests'
@@ -197,7 +197,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::GitHub::Meta
       name: '@RSRCHBOY/GitHub::Meta'
-      version: 0.32
+      version: 0.34
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@RSRCHBOY/TestRelease'
@@ -253,7 +253,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::GitHub::Update
       name: '@RSRCHBOY/GitHub::Update'
-      version: 0.32
+      version: 0.34
     -
       class: Dist::Zilla::Plugin::ArchiveRelease
       name: '@RSRCHBOY/ArchiveRelease'

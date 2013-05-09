@@ -9,7 +9,7 @@
 #
 package MooseX::RelatedClasses;
 {
-  $MooseX::RelatedClasses::VERSION = '0.004';
+  $MooseX::RelatedClasses::VERSION = '0.005';
 }
 
 # ABSTRACT: Parameterized role for related class attributes
@@ -32,26 +32,30 @@ use String::RewritePrefix;
 
 # debugging...
 #use Smart::Comments '###';
+#use autobox::JSON;
 
 
 parameter name  => (
     traits    => [Shortcuts],
     is        => 'ro',
-    isa       => NonEmptySimpleStr,
+    isa       => PackageName,
     predicate => 1,
 );
 
 parameter names => (
     traits    => [Shortcuts],
-    is        => 'lazy',
-    isa       => ArrayRef[NonEmptySimpleStr],
+    is        => 'rwp',
     predicate => 1,
-    default   => sub { [ ( $_[0]->has_name ? $_[0]->name : ()) ] },
-);
+    lazy      => 1,
 
-parameter all_in_namespace => (
-    isa     => 'Bool',
-    default => 0,
+    isa        => HashRef[Identifier],
+    constraint => sub { do { is_PackageName($_) or die 'keys must be PackageName' } for $_->keys; 1 },
+    coerce     => {
+        ArrayRef()    => sub { +{ map { $_ => $_->decamelize } @$_ } },
+        PackageName() => sub { +{       $_ => $_->decamelize       } },
+    },
+
+    default => sub { confess 'name parameter required!' unless $_[0]->has_name; $_[0]->name },
 );
 
 parameter namespace => (
@@ -61,21 +65,20 @@ parameter namespace => (
     predicate => 1,
 );
 
-parameter load_all => (
-    is      => 'ro',
-    isa     => 'Bool',
-    default => 0,
-);
-
-parameter private => (is => 'ro', isa => 'Bool', default => 0);
+parameter all_in_namespace => (isa => Bool, default => 0);
+parameter load_all         => (isa => Bool, default => 0);
+parameter private          => (isa => Bool, default => 0);
 
 # TODO use rewrite prefix to look for traits in namespace
 
 role {
     my ($p, %opts) = @_;
 
+    confess 'Cannot specify both the "name" and "names" parameters!'
+        if $p->has_name && $p->has_names;
+
     # check namespace
-    if (!$p->has_namespace) {
+    if (not $p->has_namespace) {
 
         die 'Either a namespace or a consuming metaclass must be supplied!'
             unless $opts{consumer};
@@ -85,28 +88,28 @@ role {
 
     if ($p->all_in_namespace) {
 
-        my $ns = $p->namespace || q{};
-
         confess 'Cannot use an empty namespace and all_in_namespace!'
-            unless $ns;
+            unless $p->has_namespace;
+        my $ns = $p->namespace;
 
         ### finding for namespace: $ns
-        my @mod =
-            map { s/^${ns}:://; $_                   }
+        my %mod =
+            map { s/^${ns}:://; $_ => $_->decamelize }
             map { load_class($_) if $p->load_all; $_ }
-            Module::Find::findallmod $ns
+            Module::Find::findallmod $p->namespace
             ;
-        $p->names->push(@mod);
+        $p->_set_names(\%mod);
     }
 
-    _generate_one_attribute_set($p, $_, %opts)
-        for $p->names->flatten;
+    $p->names->each(sub { _generate_one_attribute_set($p, @_, %opts) });
+    #_generate_one_attribute_set($p, $_, %opts)
+        #for $p->names->flatten;
 
     return;
 };
 
 sub _generate_one_attribute_set {
-    my ($p, $name, %opts) = @_;
+    my ($p, $name => $identifier, %opts) = @_;
 
     my $full_name
         = $p->namespace
@@ -117,7 +120,7 @@ sub _generate_one_attribute_set {
     my $pvt = $p->private ? '_' : q{};
 
     # SomeThing::More -> some_thing__more
-    my $local_name           = $name->decamelize . '_class';
+    my $local_name           = "${identifier}_class";
     my $original_local_name  = "original_$local_name";
     my $original_reader      = "$pvt$original_local_name";
     my $traitsfor_local_name = $local_name . '_traits';
@@ -180,7 +183,7 @@ MooseX::RelatedClasses - Parameterized role for related class attributes
 
 =head1 VERSION
 
-This document describes version 0.004 of MooseX::RelatedClasses - released April 22, 2013 as part of MooseX-RelatedClasses.
+This document describes version 0.005 of MooseX::RelatedClasses - released May 09, 2013 as part of MooseX-RelatedClasses.
 
 =head1 SYNOPSIS
 
