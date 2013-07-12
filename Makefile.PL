@@ -22,6 +22,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Class::Load" => 0,
     "Module::Find" => 0,
+    "Moose::Exporter" => 0,
     "MooseX::AttributeShortcuts" => "0.019",
     "MooseX::Role::Parameterized" => 0,
     "MooseX::Types::Common::String" => 0,
@@ -44,10 +45,11 @@ my %WriteMakefileArgs = (
     "Test::Fatal" => 0,
     "Test::Moose::More" => "0.014",
     "Test::More" => "0.88",
+    "lib" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.005",
+  "VERSION" => "0.006",
   "test" => {
     "TESTS" => "t/*.t"
   }

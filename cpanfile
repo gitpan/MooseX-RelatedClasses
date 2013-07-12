@@ -1,5 +1,6 @@
 requires "Class::Load" => "0";
 requires "Module::Find" => "0";
+requires "Moose::Exporter" => "0";
 requires "MooseX::AttributeShortcuts" => "0.019";
 requires "MooseX::Role::Parameterized" => "0";
 requires "MooseX::Types::Common::String" => "0";
@@ -23,6 +24,7 @@ on 'test' => sub {
   requires "Test::Fatal" => "0";
   requires "Test::Moose::More" => "0.014";
   requires "Test::More" => "0.88";
+  requires "lib" => "0";
   requires "strict" => "0";
   requires "warnings" => "0";
 };
