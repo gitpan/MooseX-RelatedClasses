@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
     "Class::Load" => 0,
     "Module::Find" => 0,
     "Moose::Exporter" => 0,
-    "MooseX::AttributeShortcuts" => "0.019",
+    "MooseX::AttributeShortcuts" => "0.020",
     "MooseX::Role::Parameterized" => 0,
     "MooseX::Types::Common::String" => 0,
     "MooseX::Types::LoadableClass" => 0,
@@ -36,20 +36,21 @@ my %WriteMakefileArgs = (
     "namespace::autoclean" => 0
   },
   "TEST_REQUIRES" => {
-    "File::Find" => 0,
-    "File::Temp" => 0,
+    "Capture::Tiny" => 0,
     "Hash::Merge::Simple" => 0,
     "Moose" => 0,
     "Moose::Util::TypeConstraints" => 0,
     "Smart::Comments" => 0,
+    "Test::CheckDeps" => "0.006",
     "Test::Fatal" => 0,
     "Test::Moose::More" => "0.014",
-    "Test::More" => "0.88",
+    "Test::More" => "0.94",
+    "blib" => 0,
     "lib" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.006",
+  "VERSION" => "0.007",
   "test" => {
     "TESTS" => "t/*.t"
   }
