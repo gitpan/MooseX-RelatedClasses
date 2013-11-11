@@ -15,22 +15,22 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 55ac697642a18dd7d974736a3d06fd531aa82382 .travis.yml
-SHA1 c2e0cd8990ff4bc279d4c49353198f2e8638e6a6 Changes
+SHA1 bbe36baa99cdb55174b13d44dd64bfcb055f69a9 Changes
 SHA1 d64131e188d9f6293e79b50e3da04245aad1c46a INSTALL
 SHA1 05207cbc5971035849c1de2c7cb3babaeaccb6fb LICENSE
 SHA1 7765c8ee1dca3554fb4f8508cae20130820ed92c MANIFEST
-SHA1 5dbf0a0cf98b934ef029e0f4d9a7ee7bf97c9099 META.json
-SHA1 8df05576026eb6c0c2dfbfd51abf4ee9757447c9 META.yml
-SHA1 c483a195d82b570f564b330a7a3eb270c6827872 Makefile.PL
-SHA1 c68eef218ee1fff1647f11ffe26acfd7f06a91f2 README
-SHA1 fae85a16c84e28c413f0c8e797ea23801b11c7ec cpanfile
+SHA1 50fc85d39f588d66a3226dd04da24135fd7018f3 META.json
+SHA1 249a1a68829f97af108691a45df1c9c260cb3c6c META.yml
+SHA1 b4fc82ade94cb21b510a7f26f517abb161edea1f Makefile.PL
+SHA1 fab8c7ea10c78a0c726ed46278c9ee7e553982c2 README
+SHA1 ffeb979499e6c56522f35c548f42009d9cb3aa42 cpanfile
 SHA1 bfaccc82e7866ef298b051eaa3989547eb322823 dist.ini
-SHA1 afa2fbbb2efb769167487ec84dcd45f8a00541d8 lib/MooseX/RelatedClasses.pm
-SHA1 4a8aed1e7b40ba08b0f7db3b7d961b95e62de3db t/00-check-deps.t
-SHA1 48926ba45e14e913c2a1d0199fee0d679f06f639 t/00-compile.t
-SHA1 2167e77a71a327b43e9a518eb81512dd707aa7a5 t/000-report-versions-tiny.t
+SHA1 6f67a2519d4b17dddef6638346923dbedb9bbdd0 lib/MooseX/RelatedClasses.pm
+SHA1 38f7e2fa39c5ae49b1e3835c93b540e4ca5f9ecb t/00-check-deps.t
+SHA1 b651711c8554ea383ef1276acc8d4441b018bc56 t/00-compile.t
+SHA1 5146a217680b9f4ac0e223278a45b1f261d18554 t/000-report-versions-tiny.t
 SHA1 2547e8b514fa5afa01b2627aa92c7c80d3c825bc t/all_in_namespace.t
-SHA1 91c01678227eb24095bbe8fa47a186dfa52aacbf t/author-pod-spell.t
+SHA1 756dbfda3f5d412febcccf2e00e0a3d80fad5107 t/author-pod-spell.t
 SHA1 eaaa980a63bfc1a253bedc6a1eb683bb218a8f95 t/basic.t
 SHA1 970077af97ef519403b3d04798bc08234491d6b0 t/blank_namespace.t
 SHA1 f792061318a88c2c9dff4b13e05b3ac166b63e3f t/custom-decamelization.t
@@ -45,19 +45,19 @@ SHA1 a032c41ef6887fab1b900669c2d304fab46680e2 t/release-eol.t
 SHA1 83e392cf4f55a71c2f66c112c5268733545f4e0d t/release-has-version.t
 SHA1 e00c4aab74eb3466e12bf651c8f4bd0379d21e31 t/release-minimum-version.t
 SHA1 08f5858e530494bddc680ef3b696feabef52790a t/release-no-smart-comments.t
-SHA1 455d1dd1867212a665ad5ea4126b572411de300c t/release-no-tabs.t
+SHA1 28988bfcc4da09ef32a2730fbf2248db0e2ba2a7 t/release-no-tabs.t
 SHA1 c959e345b4b9fe251b0f6b7b1125ae4bf0960ff4 t/release-pod-coverage.t
 SHA1 c4435b275594193a957bc7b2d6c64783c9b97374 t/release-pod-linkcheck.t
 SHA1 a3935b5fcb4586ce3877f4d923a3060f67d662e2 t/release-pod-syntax.t
-SHA1 994579756cf2ba1757c4d7cdfd0ebd1ec0eebc26 t/sugar.t
+SHA1 12531d4a9bd450273bf03dcb0c8f36e0d5aaab6a t/sugar.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iQEcBAEBAgAGBQJSFspgAAoJEOd5N1CvIgQkLuoH/1x6G7Wq4fJPHX2jUguhySCY
-E8csjIP4PZTRS/MHPqiB4Jgq8H1YMv4sHgkFicO/LWV1RrTiiU7g15oYUrc1pi13
-tZVfNVdCPRkCXtd7+Tr8TWdfR5JCNGsedEljsbztvLhiHUNnGhDB2ahduHkzBNlZ
-Jp/FN8CGP6UvjtLJbdehnH0cboEBTk/hoyTJ/4mYER0+mp0Z1HcMIyi4tPy7gB+1
-zF664uVzjXmozKR7CtKYxEo4BDNfrvkPxAEegLE6Ey9LkXRqCfUe0o1FZFS6IXjJ
-vrdRnvHYntPkRO0vcPCyY6h8NEOYYXGqJMl2eC12RdX7lLIGeXEOkbORQ5QzMl8=
-=Gyj1
+iQEcBAEBAgAGBQJSgJeQAAoJEOd5N1CvIgQkZRwH/RqULnA6FpEmaqFgUx4XCVDU
+PFxzuAY4hTi5C7Rch8wf+/TvE2w1ZUQFCP5SLKbcRoC0OWI1jAgic0oseYjc7Jnn
+aBoKHAM8MsvrSUpNCtqwzyGZsie0UC8XAmhNWkst3N7zyTN5ZSIdY0LsxOT+xGb1
+07uJJiNbDL7hx5G9H8nWmAxfBMO2eW+m44y1M0Lv2d/CmhmnG9UX7ZIXCCDAnjUA
+hIj+jeG9DbPGMGJ1ysVEiYXWgV1A0AaeDDLHONIVfRo+fUjMYVVKdsH8hysKNMdB
+Pzadcz2kq/qqhltAA6mtVOlTV4JzqBh6CELqmFH1v3jZlT3RkwaSOQKGnaikCkU=
+=C4qp
 -----END PGP SIGNATURE-----

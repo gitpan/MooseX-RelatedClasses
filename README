@@ -2,8 +2,8 @@ NAME
     MooseX::RelatedClasses - Parameterized role for related class attributes
 
 VERSION
-    This document describes version 0.007 of MooseX::RelatedClasses -
-    released August 22, 2013 as part of MooseX-RelatedClasses.
+    This document describes version 0.008 of MooseX::RelatedClasses -
+    released November 11, 2013 as part of MooseX-RelatedClasses.
 
 SYNOPSIS
         # with this:
@@ -11,9 +11,13 @@ SYNOPSIS
             name => 'Thinger', namespace => undef,
         };
 
-        # ...or this (preferred):
+        # this:
         use MooseX::RelatedClasses;
         related_class name => 'Thinger', namespace => undef;
+
+        # ...or this (preferred):
+        use MooseX::RelatedClasses;
+        related_class 'Thinger', namespace => undef;
 
         # ...we get three attributes:
         #
@@ -148,6 +152,9 @@ EXAMPLES
     Use the "names" option with an array reference of classes, and attribute
     sets will be built for all of them.
 
+        related_classes [ qw{ Thinger Dinger Finger } ];
+
+        # or longhand:
         related_classes names => [ qw{ Thinger Dinger Finger } ];
 
   Namespaces / Namespacing
@@ -166,9 +173,7 @@ EXAMPLES
         use timeandspace::autoclean;
         use MooseX::RelatedClasses;
 
-        related_classes
-            names => [ qw{ Gallifrey Enemies::Daleks SoftwareWritten::Git } ],
-            ;
+        related_classes [ qw{ Gallifrey Enemies::Daleks SoftwareWritten::Git } ];
 
     And that will generate the expected related class attributes:
 
@@ -188,7 +193,7 @@ EXAMPLES
     be able to easily tweak it on the fly. This can be done with the "undef"
     namespace:
 
-        related_class name => 'LWP::UserAgent', namespace => undef;
+        related_class 'LWP::UserAgent', namespace => undef;
 
     This will cause the following related class attributes to be generated:
 
@@ -238,6 +243,9 @@ BUGS
 
 AUTHOR
     Chris Weyl <cweyl@alumni.drew.edu>
+
+CONTRIBUTOR
+    Kulag <g.kulag@gmail.com>
 
 COPYRIGHT AND LICENSE
     This software is Copyright (c) 2012 by Chris Weyl.
