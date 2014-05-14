@@ -11,11 +11,8 @@ package MooseX::RelatedClasses;
 BEGIN {
   $MooseX::RelatedClasses::AUTHORITY = 'cpan:RSRCHBOY';
 }
-{
-  $MooseX::RelatedClasses::VERSION = '0.008';
-}
-# git description: 0.007-2-gd1d1187
-
+# git description: 0.008-4-g0a99375
+$MooseX::RelatedClasses::VERSION = '0.009';
 
 # ABSTRACT: Parameterized role for related class attributes
 
@@ -37,7 +34,10 @@ use String::RewritePrefix;
 
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
-    with_meta => [ qw{ related_classes related_class } ],
+    with_meta => [ qw{
+        related_classes   related_class
+        related_namespace
+    } ],
 );
 
 
@@ -51,6 +51,21 @@ sub related_classes {
     }
 
     find_meta('MooseX::RelatedClasses')->apply($meta, @_);
+}
+
+
+sub related_namespace {
+    my ($meta, $namespace) = (shift, shift);
+
+    my %args = (
+        all_in_namespace => 1,
+        namespace        => $namespace,
+        name             => $namespace,
+        @_,
+    );
+
+    ### %args
+    find_meta('MooseX::RelatedClasses')->apply($meta, %args);
 }
 
 
@@ -109,14 +124,17 @@ role {
 
         confess 'Cannot use an empty namespace and all_in_namespace!'
             unless $p->has_namespace;
+
         my $ns = $p->namespace;
 
         ### finding for namespace: $ns
         my %mod =
             map { s/^${ns}:://; $_ => $_->decamelize }
             map { load_class($_) if $p->load_all; $_ }
-            Module::Find::findallmod $p->namespace
+            Module::Find::findallmod $ns
             ;
+
+        ### %mod
         $p->_set_names(\%mod);
     }
 
@@ -194,7 +212,9 @@ __END__
 
 =encoding UTF-8
 
-=for :stopwords Chris Weyl Kulag <g.kulag@gmail.com> Parameterized Namespacing
+=for :stopwords Chris Weyl Kulag Parameterized Namespacing findable
+
+=for :stopwords Wishlist flattr flattr'ed gittip gittip'ed
 
 =head1 NAME
 
@@ -202,7 +222,7 @@ MooseX::RelatedClasses - Parameterized role for related class attributes
 
 =head1 VERSION
 
-This document describes version 0.008 of MooseX::RelatedClasses - released November 11, 2013 as part of MooseX-RelatedClasses.
+This document describes version 0.009 of MooseX::RelatedClasses - released May 14, 2014 as part of MooseX-RelatedClasses.
 
 =head1 SYNOPSIS
 
@@ -231,6 +251,7 @@ This document describes version 0.008 of MooseX::RelatedClasses - released Novem
         traits     => [ Shortcuts ],                # MooseX::AttributeShortcuts
         is         => 'lazy',                       # MX::AttributeShortcuts
         isa        => LoadableClass,                # MooseX::Types::LoadableClass
+        init_arg   => undef,
         constraint => sub { $_->isa('Thinger') },   # MX::AttributeShortcuts
         builder    => sub { ... compose original class and traits ... },
     );
@@ -248,7 +269,7 @@ This document describes version 0.008 of MooseX::RelatedClasses - released Novem
         isa        => LoadableClass,
         constraint => sub { $_->isa('Thinger') },
         coerce     => 1,
-        init_arg   => undef,
+        init_arg   => 'thinger_class',
         builder    => sub { 'My::Framework::Thinger' },
     );
 
@@ -355,6 +376,21 @@ Takes the same options that the role takes as parameters.  That means that this:
         namespace => undef,
     };
 
+=head2 related_namespace()
+
+Given a namespace, declares that everything under that namespace is related.
+That is,
+
+    related_namespace 'Net::Amazon::EC2';
+
+...is the same as:
+
+    with 'MooseX::RelatedClasses' => {
+        namespace        => 'Net::Amazon::EC2',
+        name             => 'Net::Amazon::EC2',
+        all_in_namespace => 1,
+    };
+
 =head1 EXAMPLES
 
 =head2 Multiple Related Classes at Once
@@ -387,12 +423,15 @@ related classes:
 
 And that will generate the expected related class attributes:
 
+    # TimeLords::Gallifrey
     gallifrey_class
     gallifrey_class_traits
     original_gallifrey_class
+    # TimeLords::Enemies::Daleks
     enemies__daleks_class
     enemies__daleks_class_traits
     original_enemies__daleks_class
+    # TimeLords::SoftwareWritten::Git
     software_written__git_class
     software_written__git_class_traits
     original_software_written__git_class
@@ -444,8 +483,8 @@ supplied.
 
 =head1 SOURCE
 
-The development version is on github at L<http://github.com/RsrchBoy/moosex-relatedclasses>
-and may be cloned from L<git://github.com/RsrchBoy/moosex-relatedclasses.git>
+The development version is on github at L<http://https://github.com/RsrchBoy/moosex-relatedclasses>
+and may be cloned from L<git://https://github.com/RsrchBoy/moosex-relatedclasses.git>
 
 =head1 BUGS
 
@@ -459,6 +498,25 @@ feature.
 =head1 AUTHOR
 
 Chris Weyl <cweyl@alumni.drew.edu>
+
+=head2 I'm a material boy in a material world
+
+=begin html
+
+<a href="https://www.gittip.com/RsrchBoy/"><img src="https://raw.githubusercontent.com/gittip/www.gittip.com/master/www/assets/%25version/logo.png" /></a>
+<a href="http://bit.ly/rsrchboys-wishlist"><img src="http://wps.io/wp-content/uploads/2014/05/amazon_wishlist.resized.png" /></a>
+<a href="https://flattr.com/submit/auto?user_id=RsrchBoy&url=https%3A%2F%2Fgithub.com%2FRsrchBoy%2Fmoosex-relatedclasses&title=RsrchBoy's%20CPAN%20MooseX-RelatedClasses&tags=%22RsrchBoy's%20MooseX-RelatedClasses%20in%20the%20CPAN%22"><img src="http://api.flattr.com/button/flattr-badge-large.png" /></a>
+
+=end html
+
+Please note B<I do not expect to be gittip'ed or flattr'ed for this work>,
+rather B<it is simply a very pleasant surprise>. I largely create and release
+works like this because I need them or I find it enjoyable; however, don't let
+that stop you if you feel like it ;)
+
+L<Flattr this|https://flattr.com/submit/auto?user_id=RsrchBoy&url=https%3A%2F%2Fgithub.com%2FRsrchBoy%2Fmoosex-relatedclasses&title=RsrchBoy's%20CPAN%20MooseX-RelatedClasses&tags=%22RsrchBoy's%20MooseX-RelatedClasses%20in%20the%20CPAN%22>,
+L<gittip me|https://www.gittip.com/RsrchBoy/>, or indulge my
+L<Amazon Wishlist|http://bit.ly/rsrchboys-wishlist>...  If you so desire.
 
 =head1 CONTRIBUTOR
 

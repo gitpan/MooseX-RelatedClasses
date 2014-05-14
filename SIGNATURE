@@ -15,22 +15,20 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 55ac697642a18dd7d974736a3d06fd531aa82382 .travis.yml
-SHA1 bbe36baa99cdb55174b13d44dd64bfcb055f69a9 Changes
-SHA1 d64131e188d9f6293e79b50e3da04245aad1c46a INSTALL
-SHA1 05207cbc5971035849c1de2c7cb3babaeaccb6fb LICENSE
-SHA1 7765c8ee1dca3554fb4f8508cae20130820ed92c MANIFEST
-SHA1 50fc85d39f588d66a3226dd04da24135fd7018f3 META.json
-SHA1 249a1a68829f97af108691a45df1c9c260cb3c6c META.yml
-SHA1 b4fc82ade94cb21b510a7f26f517abb161edea1f Makefile.PL
-SHA1 fab8c7ea10c78a0c726ed46278c9ee7e553982c2 README
-SHA1 ffeb979499e6c56522f35c548f42009d9cb3aa42 cpanfile
+SHA1 82d562852f5b6f86363873c9847b721433c9d548 Changes
+SHA1 bf2d713ceca5b8ad3d680ed15baba1b89df7e149 LICENSE
+SHA1 857ca05154bd22633e522dfbab3bea29cc4f3d1c MANIFEST
+SHA1 61b0ae36086baf89953027965af4d62664d08d08 META.json
+SHA1 2a8334eddeba4098fbf45c78c1720ca89fef3066 META.yml
+SHA1 f56e5c7eb59a0d2871e6d29c69d7cfa31c3230fe Makefile.PL
+SHA1 fc7d7b31398126fb14fe90114d67a630c42b2270 README
+SHA1 cad3ad3f93f5dcaa6786974472494f071940beee cpanfile
 SHA1 bfaccc82e7866ef298b051eaa3989547eb322823 dist.ini
-SHA1 6f67a2519d4b17dddef6638346923dbedb9bbdd0 lib/MooseX/RelatedClasses.pm
-SHA1 38f7e2fa39c5ae49b1e3835c93b540e4ca5f9ecb t/00-check-deps.t
-SHA1 b651711c8554ea383ef1276acc8d4441b018bc56 t/00-compile.t
+SHA1 8f5d4cb566aadef1bc006e6dcaa2f91246ac35a9 lib/MooseX/RelatedClasses.pm
+SHA1 c522c3928158e64bd97d34d20cbfe0b5305a7eb2 t/00-check-deps.t
+SHA1 7f9ab625f91af31d8e05aebc7ac4c315d41ba69b t/00-compile.t
 SHA1 5146a217680b9f4ac0e223278a45b1f261d18554 t/000-report-versions-tiny.t
 SHA1 2547e8b514fa5afa01b2627aa92c7c80d3c825bc t/all_in_namespace.t
-SHA1 756dbfda3f5d412febcccf2e00e0a3d80fad5107 t/author-pod-spell.t
 SHA1 eaaa980a63bfc1a253bedc6a1eb683bb218a8f95 t/basic.t
 SHA1 970077af97ef519403b3d04798bc08234491d6b0 t/blank_namespace.t
 SHA1 f792061318a88c2c9dff4b13e05b3ac166b63e3f t/custom-decamelization.t
@@ -40,24 +38,25 @@ SHA1 42b4acc20b21397436b51701876d37739371431d t/lib/Test/Class/__WONKY__.pm
 SHA1 e91923100a02492a4d68a537203491203b7532b2 t/lib/Test/Class/__WONKY__/One.pm
 SHA1 5b9d8a5daa536e028df22c77b551452de88c00ba t/lib/Test/Class/__WONKY__/Sub/One.pm
 SHA1 1f8b4552feccf71011fa4207e0e9c56917d820ef t/multiple.t
-SHA1 9c3627ff37f4fd5bddc34bf46cf3359eaf76a060 t/release-consistent-version.t
-SHA1 a032c41ef6887fab1b900669c2d304fab46680e2 t/release-eol.t
-SHA1 83e392cf4f55a71c2f66c112c5268733545f4e0d t/release-has-version.t
-SHA1 e00c4aab74eb3466e12bf651c8f4bd0379d21e31 t/release-minimum-version.t
-SHA1 08f5858e530494bddc680ef3b696feabef52790a t/release-no-smart-comments.t
-SHA1 28988bfcc4da09ef32a2730fbf2248db0e2ba2a7 t/release-no-tabs.t
-SHA1 c959e345b4b9fe251b0f6b7b1125ae4bf0960ff4 t/release-pod-coverage.t
-SHA1 c4435b275594193a957bc7b2d6c64783c9b97374 t/release-pod-linkcheck.t
-SHA1 a3935b5fcb4586ce3877f4d923a3060f67d662e2 t/release-pod-syntax.t
-SHA1 12531d4a9bd450273bf03dcb0c8f36e0d5aaab6a t/sugar.t
+SHA1 1d286ae8ae2330424ce68d032b2291c1c640a1ae t/sugar.t
+SHA1 19543169dff15ccb0e6767248c64dc8286d353d0 xt/author/pod-spell.t
+SHA1 a7948d34cfaad400286ea5d5fa6206c4c7e2552c xt/release/consistent-version.t
+SHA1 b3915eaac65e18e6a048b34a4b873beccab326b4 xt/release/eol.t
+SHA1 ed951395b425827b105c0d265d059f8030f818f5 xt/release/has-version.t
+SHA1 45c5650c155fd2dc063487eddc21fdf1e58db399 xt/release/minimum-version.t
+SHA1 ec1a7103edd9f28e09ba2ed30e740d76256d6127 xt/release/no-smart-comments.t
+SHA1 f362e4c23494c36e9dd0b3ac008a58a533361376 xt/release/no-tabs.t
+SHA1 184aadd09e300c87d2ebe7a2e2ba22dba0339a35 xt/release/pod-coverage.t
+SHA1 bd6361539c978171abd8de5763690a7ea1d9c7b1 xt/release/pod-linkcheck.t
+SHA1 31e53d1a64dffa277b9285010c6a32aee8bfe68d xt/release/pod-syntax.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJSgJeQAAoJEOd5N1CvIgQkZRwH/RqULnA6FpEmaqFgUx4XCVDU
-PFxzuAY4hTi5C7Rch8wf+/TvE2w1ZUQFCP5SLKbcRoC0OWI1jAgic0oseYjc7Jnn
-aBoKHAM8MsvrSUpNCtqwzyGZsie0UC8XAmhNWkst3N7zyTN5ZSIdY0LsxOT+xGb1
-07uJJiNbDL7hx5G9H8nWmAxfBMO2eW+m44y1M0Lv2d/CmhmnG9UX7ZIXCCDAnjUA
-hIj+jeG9DbPGMGJ1ysVEiYXWgV1A0AaeDDLHONIVfRo+fUjMYVVKdsH8hysKNMdB
-Pzadcz2kq/qqhltAA6mtVOlTV4JzqBh6CELqmFH1v3jZlT3RkwaSOQKGnaikCkU=
-=C4qp
+iQEcBAEBAgAGBQJTcyCUAAoJEOd5N1CvIgQkmgcH+wSaI8sNlZkvw9+4j3yzE3/F
+KoHgnBTBvpgzU6tN9+RVP/225Qk5VocKhpZaSAQgWzSBgp0qmkthzpeTG7kO5pg5
+2IvS2VQVLrjFo+8U8cpX7/BL5R13Xcqy/IPRndV01/M1f4o4E46TfSik6XpeOJkg
+MBH3/oO6SDDz2l5Hmg+XCpuS+/oo6IKaV/C9qhivtXiGcMMow4zVULtIFd34AOmi
+0aIDZ4dkCeNOZ2r5To8sFQnVJLfjLx52+msCtefZhDCEtTXwlN/dxMjk32t4XodU
+Uf6ooy3Tb0NUM05W4tZAvOSmgkVNsol0JC/OWWCUUYqq7QzAhclFRPE6oqnRD/w=
+=bNAb
 -----END PGP SIGNATURE-----

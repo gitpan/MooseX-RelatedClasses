@@ -2,8 +2,8 @@ NAME
     MooseX::RelatedClasses - Parameterized role for related class attributes
 
 VERSION
-    This document describes version 0.008 of MooseX::RelatedClasses -
-    released November 11, 2013 as part of MooseX-RelatedClasses.
+    This document describes version 0.009 of MooseX::RelatedClasses -
+    released May 14, 2014 as part of MooseX-RelatedClasses.
 
 SYNOPSIS
         # with this:
@@ -31,6 +31,7 @@ SYNOPSIS
             traits     => [ Shortcuts ],                # MooseX::AttributeShortcuts
             is         => 'lazy',                       # MX::AttributeShortcuts
             isa        => LoadableClass,                # MooseX::Types::LoadableClass
+            init_arg   => undef,
             constraint => sub { $_->isa('Thinger') },   # MX::AttributeShortcuts
             builder    => sub { ... compose original class and traits ... },
         );
@@ -48,7 +49,7 @@ SYNOPSIS
             isa        => LoadableClass,
             constraint => sub { $_->isa('Thinger') },
             coerce     => 1,
-            init_arg   => undef,
+            init_arg   => 'thinger_class',
             builder    => sub { 'My::Framework::Thinger' },
         );
 
@@ -147,6 +148,20 @@ FUNCTIONS
             namespace => undef,
         };
 
+  related_namespace()
+    Given a namespace, declares that everything under that namespace is
+    related. That is,
+
+        related_namespace 'Net::Amazon::EC2';
+
+    ...is the same as:
+
+        with 'MooseX::RelatedClasses' => {
+            namespace        => 'Net::Amazon::EC2',
+            name             => 'Net::Amazon::EC2',
+            all_in_namespace => 1,
+        };
+
 EXAMPLES
   Multiple Related Classes at Once
     Use the "names" option with an array reference of classes, and attribute
@@ -177,12 +192,15 @@ EXAMPLES
 
     And that will generate the expected related class attributes:
 
+        # TimeLords::Gallifrey
         gallifrey_class
         gallifrey_class_traits
         original_gallifrey_class
+        # TimeLords::Enemies::Daleks
         enemies__daleks_class
         enemies__daleks_class_traits
         original_enemies__daleks_class
+        # TimeLords::SoftwareWritten::Git
         software_written__git_class
         software_written__git_class_traits
         original_software_written__git_class
@@ -231,8 +249,9 @@ ANONYMOUS CLASS NAMES
 
 SOURCE
     The development version is on github at
-    <http://github.com/RsrchBoy/moosex-relatedclasses> and may be cloned
-    from <git://github.com/RsrchBoy/moosex-relatedclasses.git>
+    <http://https://github.com/RsrchBoy/moosex-relatedclasses> and may be
+    cloned from
+    <git://https://github.com/RsrchBoy/moosex-relatedclasses.git>
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website
@@ -243,6 +262,19 @@ BUGS
 
 AUTHOR
     Chris Weyl <cweyl@alumni.drew.edu>
+
+  I'm a material boy in a material world
+    Please note I do not expect to be gittip'ed or flattr'ed for this work,
+    rather it is simply a very pleasant surprise. I largely create and
+    release works like this because I need them or I find it enjoyable;
+    however, don't let that stop you if you feel like it ;)
+
+    Flattr this
+    <https://flattr.com/submit/auto?user_id=RsrchBoy&url=https%3A%2F%2Fgithu
+    b.com%2FRsrchBoy%2Fmoosex-relatedclasses&title=RsrchBoy's%20CPAN%20Moose
+    X-RelatedClasses&tags=%22RsrchBoy's%20MooseX-RelatedClasses%20in%20the%2
+    0CPAN%22>, gittip me <https://www.gittip.com/RsrchBoy/>, or indulge my
+    Amazon Wishlist <http://bit.ly/rsrchboys-wishlist>... If you so desire.
 
 CONTRIBUTOR
     Kulag <g.kulag@gmail.com>
